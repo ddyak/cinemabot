@@ -24,6 +24,7 @@ def help_command(message):
 @bot.message_handler(content_types=['text'])
 def send_text(message):
     desc, url = cinemabot_lib.scrapper.search_movie(message.text)
+    bot.send_chat_action(chat_id=message.chat.id, 'typing')
     bot.send_message(message.chat.id, desc)
     bot.send_photo(chat_id=message.chat.id, photo=url)
 
