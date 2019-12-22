@@ -1,0 +1,3 @@
+bs4==0.0.1
+IMDbPY==6.8
+pyTelegramBotAPI==3.6.6
