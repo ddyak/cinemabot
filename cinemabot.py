@@ -23,11 +23,17 @@ def help_command(message):
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
+    bot.send_chat_action(message.chat.id, 'typing')
     desc, url = cinemabot_lib.scrapper.search_movie(message.text)
-    bot.send_chat_action(chat_id=message.chat.id, 'typing')
-    bot.send_message(message.chat.id, desc)
-    bot.send_photo(chat_id=message.chat.id, photo=url)
-
+    if desc is None or url is None:
+        bot.send_message(message.chat.id, 'Movie not found')
+    else:
+        bot.send_message(message.chat.id, desc)
+        bot.send_chat_action(message.chat.id, 'typing')
+        try:
+            bot.send_photo(chat_id=message.chat.id, photo=url)
+        except telebot.apihelper.ApiException:
+            bot.send_message(message.chat.id, "Cover not found :(")
 
 def main():    
     bot.polling()

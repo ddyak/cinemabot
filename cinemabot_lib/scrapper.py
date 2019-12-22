@@ -10,13 +10,18 @@ ia = IMDb()
 
 def search_movie(request):
     movies = ia.search_movie(request)
-    movie = movies[0]
-    ia.update(movie, info=['main', 'plot', 'taglines', 'vote details'])
+    description = None
+    cover_url = None
+    try:
+        movie = movies[0]
+        ia.update(movie, info=['main', 'plot', 'taglines', 'vote details'])
 
-    description = movie.get('title') + '\nScore: ' \
+        description = movie.get('title') + '\nScore: ' \
                   + str(movie.get('arithmetic mean')) + '\n' \
                   + re.split(r'::', movie.get('plot')[0], maxsplit=1)[0]
-    cover_url = movie['full-size cover url']
+        cover_url = movie['full-size cover url']
+    except Exception:
+        print("babaH")
 
     # text = urllib.parse.quote_plus(message.text + 'смотреть онлайн')
     # url = 'https://google.com/search?q=' + text
