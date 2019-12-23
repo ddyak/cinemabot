@@ -28,7 +28,7 @@ def send_text(message):
     if desc is None or url is None:
         bot.send_message(message.chat.id, 'Movie not found')
     else:
-        bot.send_message(message.chat.id, desc)
+        bot.send_message(message.chat.id, desc, disable_web_page_preview=True)
         bot.send_chat_action(message.chat.id, 'typing')
         try:
             bot.send_photo(chat_id=message.chat.id, photo=url)

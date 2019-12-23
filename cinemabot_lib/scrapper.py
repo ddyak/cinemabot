@@ -10,14 +10,13 @@ def search_movie(request):
     movies = ia.search_movie(request)
     description = None
     cover_url = None
-    links = ''
     try:
         movie = movies[0]
         ia.update(movie, info=['main', 'plot', 'taglines', 'vote details'])
         links = list(search(query=request + 'смотреть онлайн', tld='co.in',
                             lang='ru', num=3, stop=3, pause=1))
 
-        description = '{0} ({1}) {2}/10\n\n{3}\nlinks{4}'.format(movie.get('title'),
+        description = '{0} ({1}) {2}/10\n\n{3}\n\n{4}'.format(movie.get('title'),
                            movie.get('year'),
                            movie.get('arithmetic mean'),
                            re.split(r'::', movie.get('plot')[0], maxsplit=1)[0],
@@ -28,4 +27,4 @@ def search_movie(request):
     except Exception:
         print(request)
 
-    return description, cover_url, links
+    return description, cover_url
