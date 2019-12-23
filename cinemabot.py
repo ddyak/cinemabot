@@ -14,10 +14,10 @@ def start_command(message):
 
 @bot.message_handler(commands=['help'])
 def help_command(message):
-    help_message = 'commands:\n'\
-                   '/help\n' \
-                   '/start\n' \
-                   '[$YOUR_MOVIE]'
+    help_message = 'Cinemabot v1.0:\n'\
+                   '/help - show this info\n'\
+                   '/start - start command \n'\
+                   '[$YOUR_MOVIE] - typical usage'
     bot.send_message(message.chat.id, help_message)
 
 
@@ -35,7 +35,8 @@ def send_text(message):
         except telebot.apihelper.ApiException:
             bot.send_message(message.chat.id, "Cover not found :(")
 
-def main():    
+
+def main():
     bot.polling()
 
 

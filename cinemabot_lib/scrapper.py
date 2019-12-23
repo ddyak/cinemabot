@@ -1,8 +1,6 @@
-import urllib
-from bs4 import BeautifulSoup
-import requests
-import urllib.request
 from imdb import IMDb
+from googlesearch import search
+
 import re
 
 ia = IMDb()
@@ -12,30 +10,22 @@ def search_movie(request):
     movies = ia.search_movie(request)
     description = None
     cover_url = None
+    links = ''
     try:
         movie = movies[0]
         ia.update(movie, info=['main', 'plot', 'taglines', 'vote details'])
+        links = list(search(query=request + 'смотреть онлайн', tld='co.in',
+                            lang='ru', num=3, stop=3, pause=1))
 
-        description = movie.get('title') + '\nScore: ' \
-                  + str(movie.get('arithmetic mean')) + '\n' \
-                  + re.split(r'::', movie.get('plot')[0], maxsplit=1)[0]
+        description = '{0} ({1}) {2}/10\n\n{3}\nlinks{4}'.format(movie.get('title'),
+                           movie.get('year'),
+                           movie.get('arithmetic mean'),
+                           re.split(r'::', movie.get('plot')[0], maxsplit=1)[0],
+                           '\n'.join(links))
+
         cover_url = movie['full-size cover url']
+
     except Exception:
-        print("babaH")
+        print(request)
 
-    # text = urllib.parse.quote_plus(message.text + 'смотреть онлайн')
-    # url = 'https://google.com/search?q=' + text
-
-    # response = requests.get(url)
-
-    # soup = BeautifulSoup(response.text, 'lxml')
-    # urls = []
-    # for g in soup.find_all("div", class_="kCrYT"):
-    #    for t in g.find_all("a", href=True):
-    #        if t['href'][:7] != '/search':
-    #            urls.append(t['href'][7:])
-
-    # bot.send_message(message.chat.id, '\n'.join(urls[:5]))
-
-
-    return description, cover_url
+    return description, cover_url, links
