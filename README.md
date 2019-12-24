@@ -6,29 +6,25 @@
 
 ### Commands
 
-/help 
-/start
-[$YOUR\_MOVIE]
+/help - show this info
+
+/start - start command 
+
+[$YOUR_MOVIE] - typical usage
 
 
 ### About implementation
 
-todo
+Бот реализован на основе Telebot. При поступлении запроса, мы пытаемся найти фильм на imdb. Для поиска фильма используется библиотека IMDbPy. Если мы его нашли, то забираем оттуда необходимую информацию, и делаем запрос в гугл на поиск ссылок на просмотр фильма, выводим первые три. Бот помещен в докер и задеплоен на AWS.
 
 
 ### Tools, packages, etc...
 
-[Telegram API](https://core.telegram.org/bots/api).
+[pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI)
 
+[IMDbPy](https://imdbpy.github.io/)
 
-[pyTelegramBotAPI](https://github.com/eternnoir/pyTelegramBotAPI).
-
-
-[imdb](https://www.imdb.com/interfaces/)
-
-
-[IMDbPy](https://lalalala.la)
-
+[googlesearch](https://github.com/MarioVilas/googlesearch)
 
 [AWS](https://aws.amazon.com/free/faqs/)
 
