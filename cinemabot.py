@@ -1,6 +1,10 @@
 import telebot
 import config
 import cinemabot_lib.scrapper
+import logging
+
+logger = telebot.logger
+telebot.logger.setLevel(logging.DEBUG) # Outputs debug messages to console.
 
 bot = telebot.TeleBot(config.token)
 
@@ -37,8 +41,9 @@ def send_text(message):
 
 
 def main():
-    bot.polling()
+    bot.infinity_polling(True)
 
 
 if __name__ == '__main__':
     main()
+

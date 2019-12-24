@@ -13,14 +13,18 @@ def search_movie(request):
     try:
         movie = movies[0]
         ia.update(movie, info=['main', 'plot', 'taglines', 'vote details'])
-        links = list(search(query=request + 'смотреть онлайн', tld='co.in',
+        google_request = '{0} {1} смотреть онлайн'.format(movie.get('title'),
+                                                          movie.get('year'))
+
+        links = list(search(query=google_request, tld='co.in',
                             lang='ru', num=3, stop=3, pause=1))
 
-        description = '{0} ({1}) {2}/10\n\n{3}\n\n{4}'.format(movie.get('title'),
-                           movie.get('year'),
-                           movie.get('arithmetic mean'),
-                           re.split(r'::', movie.get('plot')[0], maxsplit=1)[0],
-                           '\n'.join(links))
+        description = '{0} ({1}) {2}/10\n\n{3}\n\n{4}'.format(
+            movie.get('title'),
+            movie.get('year'),
+            movie.get('arithmetic mean'),
+            re.split(r'::', movie.get('plot')[0], maxsplit=1)[0],
+            '\n'.join(links))
 
         cover_url = movie['full-size cover url']
 
@@ -28,3 +32,4 @@ def search_movie(request):
         print(request)
 
     return description, cover_url
+
